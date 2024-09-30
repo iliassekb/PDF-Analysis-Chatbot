@@ -1,0 +1,29 @@
+// Class Diagram
+digraph {
+	PDFDocument [label="PDFDocument
++file_path: String
++content: String
++chunks: List<Chunk>
++loadContent()
++splitIntoChunks()"]
+	Chunk [label="Chunk
++id: String
++text: String
++embedding: Vector
++generateEmbedding()"]
+	VectorStore [label="VectorStore
++database: Map<String, Vector>
++addEmbedding(id: String, embedding: Vector)
++searchSimilar(embedding: Vector): List<String>"]
+	UserQuery [label="UserQuery
++query_text: String
++embedding: Vector
++generateEmbedding()"]
+	LLMChatbot [label="LLMChatbot
++context: String
++generateResponse(query: UserQuery, context: String): String"]
+	PDFDocument -> Chunk
+	Chunk -> VectorStore
+	UserQuery -> LLMChatbot
+	LLMChatbot -> VectorStore [label=searchSimilar]
+}
